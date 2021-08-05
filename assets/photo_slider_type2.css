@@ -1,0 +1,15 @@
+.img_grid{
+      margin-right: 1rem !important;
+}
+
+.img_grid img{
+            width: 100%;
+}
+
+.slick-dotted.slick-slider{
+      margin-bottom: 80px !important;
+}
+
+.section-header{
+      text-align: center;
+}

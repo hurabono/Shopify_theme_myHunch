@@ -1,0 +1,89 @@
+{{ 'photo_slider_type2.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width" style="overflow: hidden;">
+            {% if section.settings.title != blank %}
+            <div class="section-header">
+              <h2 style="margin-top:30px;">{{ section.settings.title | escape }}</h2>
+            </div>
+          {% endif %}
+      
+            {%- assign product_limit = section.settings.product_count -%}
+      
+            <div class="multiple-items-photo"  data-aos="fade-up"  data-aos-duration="2000">
+                  {% for Products in section.blocks limit: product_limit %}
+                    <div class="img_grid multicolumn-list__item multicolumn-card"  {{ block.shopify_attributes }}>
+                              {% if Products.settings.photo %}
+                              <div>{{ Products.settings.photo  | img_url: '580x' | img_tag }}</div>
+                              {% endif %}
+                              <h3 class="product-section-title" >{{ Products.settings.title }}</h3>
+                              <p class="product-grid-name">{{ Products.settings.description }}</p>
+                              {% if Products.settings.button_label != blank  %}
+                              <button class="button button--primary">{{ Products.settings.button_label }}</button>
+                              {% endif %}
+                  </div>  
+                {% endfor %}
+            </div>
+      
+      </div>
+
+      <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      
+      <script src="{{ 'slideshow.js' | asset_url }}"  defer="defer"></script>
+
+{% schema %}
+{
+      "name": "photo-slider-type2",
+      "class": "category-photo-slider",
+      "settings": [
+                   {
+                        "id": "title",
+                        "type": "text",
+                        "label": "Section Title"           
+                  }
+      ],
+       "blocks" : [
+            {
+                  "name": "photo-slider",
+                  "type": "photo-product-slider",
+                  "settings": [
+
+                        {
+                              "id":"photo",
+                              "type": "image_picker",
+                              "label": "Photo"
+                        },
+                        {
+                              "id": "title",
+                              "type": "text",
+                              "label": "Title"
+                        },
+                        {
+                              "id": "description",
+                              "type": "richtext",
+                              "label": "Description"
+                        },
+                        {
+                              "id": "button_label",
+                              "type": "text",
+                              "label": "Make button"
+                        },
+                        {
+                              "type": "url",
+                              "id": "button_link",
+                              "label":"Button Link"
+                        }
+                  ]
+            }
+                 
+      ], 
+      "presets": [
+                        {
+                              "category": "collection",
+                              "name": "Photo Slider Type2"
+                        }
+                  ]
+                  
+}
+{% endschema %}

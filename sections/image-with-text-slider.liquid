@@ -1,0 +1,161 @@
+<style>
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+
+
+      .img-wrapper{
+            display: flex;
+            margin: 20px 0px;
+      }
+
+
+      .img_area{
+            width: 50%;
+      }
+      .text_area{
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0px 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+      }
+      .product-section-title{
+            font-size: 2.5rem;
+            font-weight: 600;
+      }
+  
+
+      @media screen and (max-width: 1024px) {
+            .img-wrapper{
+            display: block;
+            margin: 50px 0px;
+            }
+
+            .img_area{
+            width: 100%;
+            padding: 0px;
+            }
+
+            .text_area{
+                  width: 100%;
+            }
+
+      }
+
+
+    </style>
+
+<div class="container page-width" data-aos="fade"  data-aos-duration="3000">
+            {% if section.settings.title != blank %}
+            <div class="section-header text-left">
+              <h2 style="margin-top:30px;">{{ section.settings.title | escape }}</h2>
+            </div>
+          {% endif %}
+      
+            {%- assign product_limit = section.settings.product_count -%}
+
+            <div class="swiper-container imgSwiper">
+                  <div class="swiper-wrapper">
+
+                        {% for Products in section.blocks%}
+                                          <div class="img-wrapper swiper-slide">
+                                                <div class="img_area">
+                                                      <div class="image-with-text__media image-with-text__media" >
+
+                                                      {% if Products.settings.photo %}
+                                                      {{ Products.settings.photo  | img_url: 'master' | img_tag }}
+                                                      {% endif %}
+                                                      
+
+                                                </div>
+                                                </div>
+
+                                                      <div class="text_area">
+                                                      <div class="image-with-text__content--{{ section.settings.height }}">
+                                                            
+                                                            <h3 class="product-section-title" >{{ Products.settings.title }}</h3>
+                                                            <p class="product-grid-name">{{ Products.settings.description }}</p>
+                                                            
+                                                            {% if Products.settings.button_label != blank  %}
+                                                            <button class="button button--primary">{{ Products.settings.button_label }}</button>
+                                                            {% endif %}
+                                                            
+                                                      </div>
+                                                      </div>
+                                          </div>
+                        {% endfor %}
+                  </div>
+                  <div class="swiper-button-next"></div>
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-pagination"></div>
+
+            </div>
+      </div>
+
+      <script src="{{ 'slideshow.js' | asset_url }}" defer="defer"></script>
+      <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+      <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+{% schema %}
+{
+      "name": "photo-slider",
+      "class": "category-photo-slider",
+      "settings": [
+                   {
+                        "id": "title",
+                        "type": "text",
+                        "label": "Section Title"           
+                  }
+      ],
+       "blocks" : [
+            {
+                  "name": "photo-slider",
+                  "type": "photo-product-slider",
+                  "settings": [
+
+                        {
+                              "id":"photo",
+                              "type": "image_picker",
+                              "label": "Photo"
+                        },
+                        {
+                              "id": "title",
+                              "type": "text",
+                              "label": "Title"
+                        },
+                        {
+                              "id": "description",
+                              "type": "richtext",
+                              "label": "Description"
+                        },
+                        {
+                              "id": "button_label",
+                              "type": "text",
+                              "label": "Make button"
+                        },
+                        {
+                              "type": "url",
+                              "id": "button_link",
+                              "label":"Button Link"
+                        }
+                  ]
+            }
+                 
+      ], 
+      "presets": [
+                        {
+                              "category": "collection",
+                              "name": "Photo Slider"
+                        }
+                  ]
+                  
+}
+{% endschema %}
